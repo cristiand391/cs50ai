@@ -140,3 +140,62 @@ It is optimal if:
 
 - _h(n)_ is admissible (never overestimates the true cost), and
 - _h(n)_ is consistent (for every node **n** and successor **n'** with step cost _c, h(n) ≤ h(n') + c)_
+
+## Adversarial Search
+
+A kind of search where an agent is playing against one or more agents.
+
+### Minimax
+
+A search algorithm that provides an optimal move for an agent by trying to minimize/maximize a possible loss/gain.
+
+In the case of a the tic-tac-toe game:
+
+- MAX (X) aims to maximize score.
+- MIN (O) aims to minimize score.
+
+Game:
+
+- _S_<sub>0</sub>: initial state
+- PLAYER(_s_): returns which player to move in state **_s_**
+- ACTIONS(_s_): returns legal moves in state **_s_**
+- RESULT(_s_, _a_): returns state after action **_a_** taken in state **_s_**
+- TERMINAL(_s_): checks if state **_s_** is a terminal state
+- UTILITY(_s_): final numerical value for terminal state
+
+Pseudocode:
+
+- **MAX** picks action **_a_** in **ACTIONS(_s_)** that produces highest value of **MIN-VALUE(RESULT(_s_, _a_))**
+
+- **MIN** picks action **_a_** in **ACTIONS(_s_)** that produces smallest value of **MAX-VALUE(RESULT(_s_, _a_))**
+
+```
+function MAX-VALUE(state):
+  if TERMINAL(state):
+    return UTILITY(state)
+  v = -∞
+  for action in ACTIONS(state):
+    v = MAX(v, MIN-VALUE(RESULT(state, action)))
+  return v
+
+function MIN-VALUE(state):
+  if TERMINAL(state):
+    return UTILITY(state)
+  v = ∞
+  for action in ACTIONS(state):
+    v = MIN(v, MAX-VALUE(RESULT(state, action)))
+  return v
+```
+
+### Optimizations
+
+#### Alpha-Beta Pruning
+
+An optimization technique for the minimax algorithm that prunes branchs in a search tree by comparing the actual move with the previous one.
+
+### Depth-limited minimax
+
+Same as minimax but it allows you to specify a depth and then estimates the utility of the next states.
+
+Evaluation function:  
+A function that estimates the expected utility of the game from a given state.
